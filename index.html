@@ -14,16 +14,21 @@
 <meta name="twitter:title" content="ctrls · practical working papers for IT audit">
 <meta name="twitter:description" content="ITGC, application controls, cloud and enterprise apps, at the working-paper level.">
 <meta name="twitter:image" content="https://ctrls.report/og.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2313292B%22%2F%3E%3Cpath%20d%3D%22M9%2019L16%2011L23%2019%22%20fill%3D%22none%22%20stroke%3D%22%23B0761C%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" href="/brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/brand/favicon-180.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#13292B; --paper:#F3F5F2; --surface:#FFFFFF; --line:#DBE1DC; --muted:#5B6A65;
-  --accent:#B0761C; --accent-soft:#F3E8D2;
-  --ok:#2E7A50; --ok-soft:#E6F0E9; --prog:#BC8626; --prog-soft:#FAEED5;
-  --plan:#7C8A85; --plan-soft:#ECEFEC;
+  --ink:#10202E; --paper:#F4F7FA; --surface:#FFFFFF; --line:#D6E0E9; --muted:#627484;
+  --accent:#007ACC; --accent-soft:#DCEEFB;
+  --ok:#228B57; --ok-soft:#D6F0E1; --prog:#B8790F; --prog-soft:#FDEECF;
+  --plan:#6E7F8E; --plan-soft:#E4EAF0;
+  --azure:#007ACC; --cyan:#00B0B9; --teal:#118A7A; --violet:#6C5CE7; --amber:#D68F16; --coral:#D64A3E;
   --display:"Space Grotesk","Segoe UI",system-ui,sans-serif;
   --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -92,6 +97,17 @@ section{padding:56px 0}
 .area .row{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .area .go{font-family:var(--mono);font-size:11.5px;color:var(--accent);opacity:0;transition:opacity .15s ease}
 .area:hover .go{opacity:1}
+
+
+/* group colour coding */
+.group[data-c] .group-head .g{color:var(--gc)}
+.group[data-c] .group-head{border-bottom-color:var(--gc)}
+.group[data-c] .area:hover{border-color:var(--gc)}
+.group[data-c] .area .go{color:var(--gc)}
+.group[data-c] .group-head h3::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--gc);margin-right:9px;vertical-align:middle}
+.group[data-c="a"]{--gc:var(--azure)} .group[data-c="b"]{--gc:var(--cyan)}
+.group[data-c="c"]{--gc:var(--teal)}  .group[data-c="d"]{--gc:var(--violet)}
+.group[data-c="e"]{--gc:var(--amber)} .group[data-c="f"]{--gc:var(--coral)}
 
 /* module anatomy */
 .steps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:28px}
@@ -180,69 +196,69 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
     <span class="k"><span class="pill plan">Planned</span> tell me if you need it sooner</span>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="a">
     <div class="group-head"><span class="g">A</span><h3>ITGC</h3><span class="cnt">4 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">Access to Programs &amp; Data</span><span class="sub">Privileged access, JML, access reviews</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Access to Programs &amp; Data</span><span class="sub">Privileged access, JML, access reviews</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
       <a class="area" href="/segregation-of-duties/"><span class="nm">Program Changes</span><span class="sub">Change management, CI/CD, SoD</span><span class="row"><span class="pill ok">Early access</span><span class="go">See example →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Program Development</span><span class="sub">SDLC, implementations, data migration, UAT</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Computer Operations</span><span class="sub">Job scheduling, incidents, backup &amp; recovery</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Program Development</span><span class="sub">SDLC, implementations, data migration, UAT</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Computer Operations</span><span class="sub">Job scheduling, incidents, backup &amp; recovery</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="b">
     <div class="group-head"><span class="g">B</span><h3>Application controls &amp; IT dependencies</h3><span class="cnt">6 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">Automated &amp; configurable controls</span><span class="sub">Edit checks, limits, 3-way match, workflow approvals</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Interfaces</span><span class="sub">Completeness and accuracy of data transfer</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Reports &amp; IPE</span><span class="sub">Report logic, parameters, completeness, accuracy</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Calculations</span><span class="sub">Automated computations, rates, accruals</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Application-level SoD</span><span class="sub">Role conflicts inside the application</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Input / processing / output</span><span class="sub">Controls across the transaction lifecycle</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Automated &amp; configurable controls</span><span class="sub">Edit checks, limits, 3-way match, workflow approvals</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Interfaces</span><span class="sub">Completeness and accuracy of data transfer</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Reports &amp; IPE</span><span class="sub">Report logic, parameters, completeness, accuracy</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Calculations</span><span class="sub">Automated computations, rates, accruals</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Application-level SoD</span><span class="sub">Role conflicts inside the application</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Input / processing / output</span><span class="sub">Controls across the transaction lifecycle</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="c">
     <div class="group-head"><span class="g">C</span><h3>Platform &amp; infrastructure</h3><span class="cnt">6 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">Cloud · AWS / Azure / GCP</span><span class="sub">Ten control areas, scoping to evidence</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Containers &amp; Kubernetes</span><span class="sub">Images, registries, cluster configuration</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Identity platforms</span><span class="sub">AD, Entra ID, Okta</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Databases</span><span class="sub">SQL Server, Oracle, PostgreSQL</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Operating systems</span><span class="sub">Windows, Linux</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Network &amp; firewalls</span><span class="sub">Segmentation, rule review, exposure</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Cloud · AWS / Azure / GCP</span><span class="sub">Ten control areas, scoping to evidence</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Containers &amp; Kubernetes</span><span class="sub">Images, registries, cluster configuration</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Identity platforms</span><span class="sub">AD, Entra ID, Okta</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Databases</span><span class="sub">SQL Server, Oracle, PostgreSQL</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Operating systems</span><span class="sub">Windows, Linux</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Network &amp; firewalls</span><span class="sub">Segmentation, rule review, exposure</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="d">
     <div class="group-head"><span class="g">D</span><h3>Enterprise applications</h3><span class="cnt">5 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">SAP · ECC / S/4HANA</span><span class="sub">Modules, configuration, SoD matrices</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Oracle E-Business / Fusion</span><span class="sub">Configuration and access controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Microsoft Dynamics</span><span class="sub">Configuration and access controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Salesforce</span><span class="sub">Profiles, permission sets, data access</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Other business apps &amp; SaaS</span><span class="sub">Connected apps, data flows, access</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">SAP · ECC / S/4HANA</span><span class="sub">Modules, configuration, SoD matrices</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Oracle E-Business / Fusion</span><span class="sub">Configuration and access controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Microsoft Dynamics</span><span class="sub">Configuration and access controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Salesforce</span><span class="sub">Profiles, permission sets, data access</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Other business apps &amp; SaaS</span><span class="sub">Connected apps, data flows, access</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="e">
     <div class="group-head"><span class="g">E</span><h3>Cross-cutting</h3><span class="cnt">5 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">Scoping &amp; risk assessment</span><span class="sub">What's in scope, and how to defend it</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Scoping &amp; risk assessment</span><span class="sub">What's in scope, and how to defend it</span><span class="row"><span class="pill ok">Early access</span><span class="go">Get access →</span></span></a>
       <a class="area" href="/segregation-of-duties/"><span class="nm">Evidence standards</span><span class="sub">Screenshots, timestamps, documentation</span><span class="row"><span class="pill ok">Early access</span><span class="go">See example →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Sampling &amp; populations</span><span class="sub">Population definition, sample selection</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Findings &amp; reporting</span><span class="sub">Writing up, risk rating, remediation</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Framework mapping</span><span class="sub">ISO 27001 · NIST · SOC 2 · PCI DSS · SOX</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Sampling &amp; populations</span><span class="sub">Population definition, sample selection</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Findings &amp; reporting</span><span class="sub">Writing up, risk rating, remediation</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Framework mapping</span><span class="sub">ISO 27001 · NIST · SOC 2 · PCI DSS · SOX</span><span class="row"><span class="pill prog">In progress</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" data-c="f">
     <div class="group-head"><span class="g">F</span><h3>Specialised</h3><span class="cnt">4 areas</span></div>
     <div class="areas">
-      <a class="area" href="#work"><span class="nm">Third-party assurance</span><span class="sub">Vendor reviews, SOC 2 reliance, CUECs</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">Data privacy controls</span><span class="sub">GDPR-driven technical controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">AI / ML governance</span><span class="sub">Model governance and controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
-      <a class="area" href="#work"><span class="nm">OT / ICS</span><span class="sub">Industrial and operational technology</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Third-party assurance</span><span class="sub">Vendor reviews, SOC 2 reliance, CUECs</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">Data privacy controls</span><span class="sub">GDPR-driven technical controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">AI / ML governance</span><span class="sub">Model governance and controls</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
+      <a class="area" href="https://tally.so/r/QKakQp"><span class="nm">OT / ICS</span><span class="sub">Industrial and operational technology</span><span class="row"><span class="pill plan">Planned</span><span class="go">Register interest →</span></span></a>
     </div>
   </div>
 </div></section>
@@ -322,6 +338,8 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
   <span>Practical working papers for IT audit · © ctrls.report</span>
 </div></footer>
 
+<!-- Cloudflare Web Analytics · cookieless, no personal data, no consent banner needed -->
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4c80b6d945b04f21bc9874e86b1cb3dd"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
