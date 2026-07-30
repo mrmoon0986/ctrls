@@ -85,9 +85,25 @@ section{padding:56px 0}
 .group-head .g{font-family:var(--mono);font-size:12px;color:var(--accent)}
 .group-head h3{font-size:19px}
 .group-head .cnt{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
-.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:860px){.areas{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.areas{grid-template-columns:1fr}}
+.areas{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.area{grid-column:span 2}
+/* no widow cards: an incomplete last row is rebalanced into halves */
+.areas>.area:last-child:nth-child(3n+2),
+.areas>.area:nth-last-child(2):nth-child(3n+1),
+.areas>.area:last-child:nth-child(3n+1),
+.areas>.area:nth-last-child(2):nth-child(3n),
+.areas>.area:nth-last-child(3):nth-child(3n+2),
+.areas>.area:nth-last-child(4):nth-child(3n+1){grid-column:span 3}
+.areas>.area:only-child{grid-column:span 6}
+@media(max-width:860px){
+  .areas{grid-template-columns:repeat(4,1fr)}
+  .areas>.area{grid-column:span 2}
+  .areas>.area:last-child:nth-child(2n+1){grid-column:span 4}
+}
+@media(max-width:560px){
+  .areas{grid-template-columns:1fr}
+  .areas>.area{grid-column:span 1}
+}
 .area{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 15px;display:flex;flex-direction:column;gap:9px;
   text-decoration:none;color:inherit;transition:border-color .15s ease,transform .15s ease}
 .area:hover{border-color:var(--accent);transform:translateY(-1px)}
