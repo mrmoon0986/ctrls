@@ -52,7 +52,7 @@ a{color:var(--accent)}
 
 .hero{padding:78px 0 40px}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
-.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:700;max-width:20ch;margin-top:18px}
+.hero h1{font-size:clamp(34px,5.2vw,58px);font-weight:700;max-width:24ch;margin-top:18px;text-wrap:balance;letter-spacing:-.02em}
 .hero .lede{font-size:clamp(17px,2.1vw,21px);color:var(--muted);max-width:60ch;margin-top:22px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 .hero .meta{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
@@ -172,10 +172,10 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
 
 <header class="hero"><div class="wrap">
   <div class="eyebrow">Services</div>
-  <h1>Find out what your auditor will find, first</h1>
-  <p class="lede">You can have your environment reviewed now, by an auditor, on your terms. Or you can find out what's wrong with it during the audit, in front of your board. The first way is cheaper.</p>
+  <h1>Certification, taken off your desk entirely</h1>
+  <p class="lede">Most consultants hand you policies and leave you to face the auditor alone. I build the processes, put the controls in place, gather the evidence, and deal with the auditor myself. You get the certificate, not a folder.</p>
   <div class="hero-actions">
-    <a class="btn btn-solid" href="https://tally.so/r/J9ZMPd?service=m365-assessment">Get your tenant reviewed →</a>
+    <a class="btn btn-solid" href="https://tally.so/r/J9ZMPd?service=turnkey">Talk about your certification →</a>
     <a class="btn btn-outline" href="#offer">See what's on offer</a>
   </div>
   <div class="meta">18 years in IT audit, 12 at Big 4 · SOX ITGC and IT dependencies · ISA 315 · DORA · CSSF · GDPR</div>
@@ -185,9 +185,9 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
   <div class="sec-head"><span class="num">01</span><h2>You're probably here because</h2></div>
   <div class="triggers">
     <div class="trig"><span class="q">01</span><span class="txt"><b>A customer sent you a security questionnaire</b> and you don't want to answer it with guesses.</span></div>
-    <div class="trig"><span class="q">02</span><span class="txt"><b>You've been told you need ISO 27001 or SOC 2</b> by a date somebody else picked.</span></div>
+    <div class="trig"><span class="q">02</span><span class="txt"><b>You've been told you need ISO 27001 or SOC 2</b> by a date somebody else picked, and nobody in house has done it before.</span></div>
     <div class="trig"><span class="q">03</span><span class="txt"><b>Nobody has properly looked at your Microsoft 365 tenant</b> since the day it was set up.</span></div>
-    <div class="trig"><span class="q">04</span><span class="txt"><b>Your last audit produced findings</b> and you'd rather not see the same ones again.</span></div>
+    <div class="trig"><span class="q">04</span><span class="txt"><b>A consultant already wrote you the policies</b> and you have since worked out that policies are not the hard part.</span></div>
     <div class="trig"><span class="q">05</span><span class="txt"><b>Your board asked how exposed you are</b> and the honest answer was that nobody knows.</span></div>
     <div class="trig"><span class="q">06</span><span class="txt"><b>You're the one who has to fix it</b> and you need a list that's ordered, not a 200 page tool export.</span></div>
   </div>
@@ -257,10 +257,27 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
 
 <section class="alt" id="offer"><div class="wrap">
   <div class="sec-head"><span class="num">03</span><h2>What you can buy</h2></div>
-  <p class="sec-sub">Fixed price agreed before anything starts. You get a report you can put in front of your board, your engineers and your auditor without rewriting it for each of them.</p>
+  <p class="sec-sub">Four ways in, from a single hour up to owning the whole certification. Fixed price agreed before anything starts.</p>
   <div class="svc-grid">
 
     <div class="card primary">
+      <span class="kicker">End to end · accountable for the outcome</span>
+      <h3>Turnkey compliance</h3>
+      <p class="blurb">You need the certificate. Not a folder of policies, not a gap report, not advice. I take the whole programme from wherever you are now through to the auditor signing off, and I stay accountable for it the entire way.</p>
+      <ul>
+        <li>The processes get built, not just described. Controls designed to work in your environment and then actually put in place</li>
+        <li>The evidence gets collected. I chase the screenshots, exports and approvals, including from teams and systems I have no access to</li>
+        <li>I am the auditor's point of contact. Their questions come to me, not to your engineers mid sprint</li>
+        <li>The work is coordinated across your organisation, so it does not stall every time it needs something from another team</li>
+      </ul>
+      <div class="foot">
+        <a class="btn btn-solid" href="https://tally.so/r/J9ZMPd?service=turnkey">Talk about your certification →</a>
+        <span class="turn">ISO 27001:2022 · SOC 2 · PCI DSS · GDPR · DORA</span>
+      </div>
+      <p class="fine">There is no shortage of consultants who will write you a stack of policies for very little money and take no responsibility for what happens in the audit. That is the cheap part of this work and it is the part that fails. What I am selling is being on the hook for the result.</p>
+    </div>
+
+    <div class="card">
       <span class="kicker">Most requested</span>
       <h3>Microsoft 365 security assessment</h3>
       <p class="blurb">Your tenant reviewed the way an auditor reviews it, against the CISA ScubaGear baselines plus manual checks the automated tools miss. You get every gap, what it actually risks, and the fix, in the order you should do them.</p>
@@ -278,14 +295,13 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
     </div>
 
     <div class="card">
-      <span class="kicker">Before the audit</span>
-      <h3>Certification readiness</h3>
-      <p class="blurb">Walk into the audit already knowing the answer. I've taken companies through ISO 27001:2022, SOC 2 Type 1 and Type 2 and PCI DSS, worked on SOX, CMMC and NIST based programmes, and on GDPR, DORA and CSSF driven work in Europe. You find out what the assessor will accept before the assessor tells you.</p>
+      <span class="kicker">Already have a team</span>
+      <h3>Readiness review</h3>
+      <p class="blurb">You have people doing the work and you want to know whether it will hold up. A straight read on where you stand, so the audit produces no surprises. If it turns out you need more than a review, the turnkey option is there.</p>
       <ul>
         <li>Where you stand against the standard, told straight</li>
         <li>A fix list ordered by what the audit will actually test, not by what's easy</li>
         <li>Your evidence reviewed before it leaves the building</li>
-        <li>Someone in your corner during the audit itself</li>
       </ul>
       <div class="foot">
         <a class="btn btn-solid" href="https://tally.so/r/J9ZMPd?service=readiness">Check where you stand →</a>
@@ -310,10 +326,11 @@ footer .bm{font-family:var(--display);font-weight:700;color:var(--ink)}
 <section id="how"><div class="wrap">
   <div class="sec-head"><span class="num">04</span><h2>How it goes</h2></div>
   <div class="steps">
-    <div class="step"><div class="n">01</div><div class="t">You tell me what's going on</div><p>Thirty minutes. The environment, the deadline, who's asking. I tell you straight if it isn't worth doing.</p></div>
-    <div class="step"><div class="n">02</div><div class="t">You get a price, in writing</div><p>Scope, deliverables, dates, cost. You decide with all of it in front of you. Nothing open ended.</p></div>
-    <div class="step"><div class="n">03</div><div class="t">You get the report and a call</div><p>Report plus a walkthrough, so your team knows what to do on Monday rather than filing it.</p></div>
+    <div class="step"><div class="n">01</div><div class="t">You tell me what's going on</div><p>Thirty minutes. The environment, the deadline, who is asking for the certificate. I tell you straight if it isn't worth doing.</p></div>
+    <div class="step"><div class="n">02</div><div class="t">You get a plan and a price, in writing</div><p>Scope, milestones, what I need from your side, dates and cost. Nothing open ended, and no invoice that grows on its own.</p></div>
+    <div class="step"><div class="n">03</div><div class="t">I run it, you get the certificate</div><p>Controls built, evidence gathered, auditor handled. You hear from me on progress, not on every request I could have chased myself.</p></div>
   </div>
+  <p class="note">On a turnkey programme I need one sponsor inside your organisation who can open doors. Everything else I can carry.</p>
 </div></section>
 
 <section class="alt" id="report"><div class="wrap">
