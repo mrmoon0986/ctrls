@@ -118,8 +118,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
 .wp__row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--rule)}
 .wp__row span{margin-right:auto}
 .wp__row i{font-style:normal;color:var(--pencil);font-size:14px}
-.wp__ft{padding:13px 14px;line-height:1.6;color:var(--slate)}
-.wp__ft b{color:var(--ink);font-weight:500}
+.wp__sign div{display:flex;gap:14px;align-items:baseline;
+  padding:10px 14px;border-bottom:1px solid var(--rule)}
+.wp__sign span{flex:0 0 78px;color:var(--slate);font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;line-height:1.5}
+.wp__sign b{font-weight:500;font-size:12.5px;line-height:1.45}
+.wp__concl{border-bottom:none !important;background:rgba(44,110,73,.07)}
+.wp__concl b{color:var(--pencil)}
+.wp__concl b::after{content:" ✓";font-size:13px}
 @media(max-width:900px){
   .hero__grid{grid-template-columns:1fr;gap:38px}
 }
@@ -248,10 +254,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
         <div class="wp__row"><span>PCI DSS</span><i>✓</i></div>
         <div class="wp__row"><span>GDPR · DORA</span><i>✓</i></div>
         <div class="wp__row"><span>Cloud, hybrid and on&nbsp;premise</span><i>✓</i></div>
-        <div class="wp__ft">
-          Prepared by <b>CISM, ex&nbsp;PwC</b><br>
-          Reviewed by <b>your auditor</b><br>
-          Conclusion — <b>certificate issued</b>
+        <div class="wp__sign">
+          <div><span>Prepared by</span><b>CISM, ex&nbsp;PwC</b></div>
+          <div><span>Evidence</span><b>Gathered and chased across your teams</b></div>
+          <div><span>Follow&nbsp;ups</span><b>Auditor's questions come to me</b></div>
+          <div><span>Your side</span><b>One sponsor who can open doors</b></div>
+          <div><span>Reviewed by</span><b>Your auditor, independently</b></div>
+          <div class="wp__concl"><span>Conclusion</span><b>Certificate issued</b></div>
         </div>
       </div>
     </div>
