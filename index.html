@@ -11,10 +11,9 @@
 <meta property="og:url" content="https://ctrls.report/">
 <meta property="og:image" content="https://ctrls.report/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ctrls.report/og.png">
 <meta name="twitter:title" content="Making controls work">
 <meta name="twitter:description" content="Controls that work in your environment, evidence gathered, auditor handled. The certificate, not the folder.">
-
+<meta name="twitter:image" content="https://ctrls.report/og.png">
 <link rel="canonical" href="https://ctrls.report/">
 <link rel="manifest" href="/site.webmanifest">
 <!-- ВОССТАНОВИТЬ: строки с favicon / apple-touch-icon из папки brand,
@@ -115,26 +114,55 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
 .hero__grid{display:grid;grid-template-columns:1.35fr .9fr;gap:56px;align-items:start}
 .hero h1{font-size:clamp(40px,6.4vw,78px);max-width:14ch}
 .hero .lede{margin-top:26px}
-.cred{font-family:var(--mono);font-size:12.5px;line-height:2;color:var(--slate);
-  border-top:1px solid var(--rule);margin-top:44px;padding:18px 0 0}
-.cred strong{color:var(--ink);font-weight:500}
 
-/* workpaper card = signature */
+/* credentials strip */
+.cred{margin-top:46px;border-top:1px solid var(--ink);
+  display:grid;grid-template-columns:1.25fr 1.3fr 1fr}
+.cred>div{padding:20px 22px 4px 0;border-right:1px solid var(--rule)}
+.cred>div:last-child{border-right:none;padding-right:0}
+.cred__k{display:block;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--pencil);margin-bottom:10px}
+.cred__k::before{content:"✓ "}
+.cred__v{margin:0;font-family:var(--mono);font-size:12px;line-height:1.8;color:var(--slate)}
+.cred__v b{color:var(--ink);font-weight:500}
+@media(max-width:900px){
+  .cred{grid-template-columns:1fr}
+  .cred>div{border-right:none;border-bottom:1px solid var(--rule);padding:18px 0 16px}
+  .cred>div:last-child{border-bottom:none}
+}
+
+/* ---------- workpaper card = signature ---------- */
 .wp{border:1px solid var(--ink);border-radius:2px;background:var(--paper-2);
-  font-family:var(--mono);font-size:12.5px}
-.wp__hd{display:flex;justify-content:space-between;padding:10px 14px;
-  border-bottom:1px solid var(--ink);letter-spacing:.1em;text-transform:uppercase;font-size:11px}
-.wp__row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--rule)}
+  font-family:var(--mono);font-size:12.5px;overflow:hidden}
+.wp__hd{display:flex;justify-content:space-between;align-items:center;
+  padding:12px 14px;background:var(--ink);color:var(--paper-2);
+  letter-spacing:.16em;text-transform:uppercase;font-size:9.5px}
+.wp__hd b{font-weight:400;opacity:.62}
+
+.wp__lbl{display:flex;align-items:center;gap:10px;padding:16px 14px 9px;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate)}
+.wp__lbl::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+.wp__row{display:flex;align-items:baseline;gap:11px;padding:9px 14px;
+  border-bottom:1px solid var(--rule)}
+.wp__row em{font-style:normal;color:var(--rule);font-size:10px;letter-spacing:.04em}
 .wp__row span{margin-right:auto}
-.wp__row i{font-style:normal;color:var(--pencil);font-size:14px}
-.wp__sign div{display:flex;gap:14px;align-items:baseline;
-  padding:10px 14px;border-bottom:1px solid var(--rule)}
-.wp__sign span{flex:0 0 88px;color:var(--slate);font-size:9.5px;white-space:nowrap;
-  letter-spacing:.09em;text-transform:uppercase;line-height:1.5}
-.wp__sign b{font-weight:500;font-size:12.5px;line-height:1.45}
-.wp__concl{border-bottom:none !important;background:rgba(44,110,73,.07)}
-.wp__concl b{color:var(--pencil)}
-.wp__concl b::after{content:" ✓";font-size:13px}
+.wp__row i{font-style:normal;color:var(--pencil);font-size:14px;line-height:1}
+
+.wp__sign div{display:flex;gap:12px;align-items:baseline;
+  padding:9px 14px;border-bottom:1px solid var(--rule)}
+.wp__sign span{flex:0 0 82px;color:var(--slate);font-size:9px;white-space:nowrap;
+  letter-spacing:.13em;text-transform:uppercase;line-height:1.6}
+.wp__sign b{font-weight:500;font-size:12px;line-height:1.5}
+
+.wp__stamp{margin:20px 16px 22px;border:2px solid var(--pencil);border-radius:3px;
+  color:var(--pencil);padding:11px 10px 9px;text-align:center;
+  transform:rotate(-1.5deg);opacity:.9;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;line-height:1.4}
+.wp__stamp b{display:block;font-weight:500;font-size:13px;letter-spacing:.2em}
+.wp__stamp em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.14em;
+  opacity:.72;margin-top:5px}
+
 @media(max-width:900px){
   .hero__grid{grid-template-columns:1fr;gap:38px}
 }
@@ -179,8 +207,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
 .offer__price{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
 
 /* ---------- steps (real sequence) ---------- */
-.steps{counter-reset:s;display:grid;gap:0;margin-top:34px;
-  border-top:1px solid var(--rule)}
+.steps{counter-reset:s;display:grid;gap:0;margin-top:34px;border-top:1px solid var(--rule)}
 .steps>div{display:grid;grid-template-columns:64px 1fr;gap:24px;
   padding:26px 0;border-bottom:1px solid var(--rule)}
 .steps>div::before{counter-increment:s;content:counter(s,decimal-leading-zero);
@@ -222,6 +249,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .ref .tick{opacity:1;transform:none;transition:none}
+  .wp__stamp{transform:none}
 }
 </style>
 </head>
@@ -249,34 +277,53 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
           <a class="btn" href="#contact">Talk about your certification →</a>
           <a class="btn btn--ghost" href="#buy">See what's on offer</a>
         </div>
-        <p class="cred">
-          <strong>CISM</strong> · hundreds of engagements, first at <strong>PwC</strong>, then inside the businesses<br>
-          Retail · telecom · energy, utilities and mining · manufacturing · financial services · public sector<br>
-          Across <strong>EMEA and US owned groups</strong> — SOX ITGC · ISA 315 · CSSF · DORA
-        </p>
+
+        <div class="cred">
+          <div>
+            <span class="cred__k">Credentials</span>
+            <p class="cred__v"><b>CISM</b><br>Hundreds of engagements, first at <b>PwC</b>, then inside the businesses</p>
+          </div>
+          <div>
+            <span class="cred__k">Sectors</span>
+            <p class="cred__v">Retail · telecom · energy, utilities and mining · manufacturing · financial services · public sector</p>
+          </div>
+          <div>
+            <span class="cred__k">Regimes</span>
+            <p class="cred__v"><b>EMEA and US owned groups</b><br>SOX ITGC · ISA 315 · CSSF · DORA</p>
+          </div>
+        </div>
       </div>
 
-      <div class="wp" aria-label="Scope summary">
-        <div class="wp__hd"><span>W/P ref</span><span>Summary</span></div>
-        <div class="wp__row"><span>ISO 27001:2022</span><i>✓</i></div>
-        <div class="wp__row"><span>SOC 2 Type 1 &amp; Type 2</span><i>✓</i></div>
-        <div class="wp__row"><span>PCI DSS</span><i>✓</i></div>
-        <div class="wp__row"><span>GDPR · DORA</span><i>✓</i></div>
-        <div class="wp__row"><span>Cloud, hybrid and on&nbsp;premise</span><i>✓</i></div>
+      <div class="wp" aria-label="Summary of scope and responsibilities">
+        <div class="wp__hd"><span>W/P ref</span><b>Summary</b></div>
+
+        <div class="wp__lbl">Scope</div>
+        <div class="wp__row"><em>01</em><span>ISO 27001:2022</span><i>✓</i></div>
+        <div class="wp__row"><em>02</em><span>SOC 2 Type 1 &amp; Type 2</span><i>✓</i></div>
+        <div class="wp__row"><em>03</em><span>PCI DSS</span><i>✓</i></div>
+        <div class="wp__row"><em>04</em><span>GDPR · DORA</span><i>✓</i></div>
+        <div class="wp__row"><em>05</em><span>Cloud, hybrid and on&nbsp;premise</span><i>✓</i></div>
+
+        <div class="wp__lbl">Who does what</div>
         <div class="wp__sign">
           <div><span>Prepared by</span><b>CISM, ex&nbsp;PwC</b></div>
-          <div><span>Evidence</span><b>Gathered and chased across your teams</b></div>
-          <div><span>Follow&nbsp;ups</span><b>Auditor's questions come to me</b></div>
-          <div><span>Your side</span><b>One sponsor who can open doors</b></div>
+          <div><span>Evidence</span><b>Chased down across your teams</b></div>
+          <div><span>Follow ups</span><b>Auditor's questions come to me</b></div>
+          <div><span>Your side</span><b>One sponsor who opens doors</b></div>
           <div><span>Reviewed by</span><b>Your auditor, independently</b></div>
-          <div class="wp__concl"><span>Conclusion</span><b>Certificate issued</b></div>
+        </div>
+
+        <div class="wp__stamp">
+          Conclusion
+          <b>Certificate issued</b>
+          <em>Not a folder of policies</em>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ B — WHY ============ -->
+<!-- ============ A — WHY ============ -->
 <section class="band" id="why">
   <div class="band__inner">
     <div class="ref"><b>A</b>Context <span class="tick">✓</span></div>
@@ -294,7 +341,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   </div>
 </section>
 
-<!-- ============ C — WHO ============ -->
+<!-- ============ B — WHO ============ -->
 <section class="band" id="who">
   <div class="band__inner">
     <div class="ref"><b>B</b>Background <span class="tick">✓</span></div>
@@ -339,7 +386,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   </div>
 </section>
 
-<!-- ============ D — WHAT YOU CAN BUY ============ -->
+<!-- ============ C — WHAT YOU CAN BUY ============ -->
 <section class="band" id="buy">
   <div class="band__inner">
     <div class="ref"><b>C</b>Services <span class="tick">✓</span></div>
@@ -401,7 +448,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   </div>
 </section>
 
-<!-- ============ F — HOW IT GOES ============ -->
+<!-- ============ D — HOW IT GOES ============ -->
 <section class="band" id="how">
   <div class="band__inner">
     <div class="ref"><b>D</b>Process <span class="tick">✓</span></div>
@@ -417,7 +464,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   </div>
 </section>
 
-<!-- ============ G — DELIVERABLE ============ -->
+<!-- ============ E — DELIVERABLE ============ -->
 <section class="band" id="deliverable">
   <div class="band__inner">
     <div class="ref"><b>E</b>Deliverable <span class="tick">✓</span></div>
@@ -436,7 +483,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   </div>
 </section>
 
-<!-- ============ H — WORKED EXAMPLE ============ -->
+<!-- ============ F — WORKED EXAMPLE ============ -->
 <section class="band" id="example">
   <div class="band__inner">
     <div class="ref"><b>F</b>Example <span class="tick">✓</span></div>
@@ -445,15 +492,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
       <p class="lede" style="margin-top:20px">Rather than describe the standard I work to, here is a control audited end to end. Free to read, no signup. It is the same depth your programme gets.</p>
       <div class="example">
         <p class="offer__tag">Segregation of duties</p>
-        <h3>Segregation of duties over production changes</h3>
-        <p>A developer must not be able to build a change and release it without independent approval. The full audit: process, interviews, test steps, evidence, and how to tell a pass from an exception.</p>
+        <h3>A developer must not be able to ship their own change</h3>
+        <p>The control every ISO 27001 and SOC 2 audit tests, and the one that most often fails in a team that ships quickly. What a working version looks like, what your auditor will do to it, and the five places it usually breaks.</p>
         <div class="btns"><a class="btn" href="segregation-of-duties/">Read the walkthrough →</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ I — CONTACT ============ -->
+<!-- ============ G — CONTACT ============ -->
 <section class="band" id="contact">
   <div class="band__inner">
     <div class="ref"><b>G</b>Contact <span class="tick">✓</span></div>
@@ -472,6 +519,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--pencil-red);outline
   <div class="foot__in">
     <div class="foot__brand">Making controls work<span>Certification run end to end</span></div>
     <a href="#buy">Services</a>
+    <a href="segregation-of-duties/">Worked example</a>
     <a href="https://tally.so/r/J9ZMPd?service=general">Get in touch</a>
     <div class="signoff">CISM · ISO 27001 · SOC 2 · PCI DSS · EMEA and US owned groups</div>
   </div>
