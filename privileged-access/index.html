@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nobody should have standing access to production · worked example</title>
+<meta name="description" content="Privileged access to production: what a working control looks like, how it gets tested, and the five places it tends to break. One control, end to end.">
+<meta property="og:title" content="Nobody should have standing access to production. Including you.">
+<meta property="og:description" content="The finding that turns up in almost every audit, and the one enterprise customers ask about first. What a working version looks like and how it gets tested.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ctrls.report/privileged-access/">
+<meta property="og:image" content="https://ctrls.report/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nobody should have standing access to production">
+<meta name="twitter:description" content="What a working privileged access control looks like, and how it gets tested.">
+<meta name="twitter:image" content="https://ctrls.report/og.png">
+<link rel="canonical" href="https://ctrls.report/privileged-access/">
+<link rel="manifest" href="/site.webmanifest">
+<!-- ВОССТАНОВИТЬ: строки с favicon / apple-touch-icon из папки brand -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#E5E8E9;
+  --paper-2:#EEF0F1;
+  --ink:#0F1A21;
+  --slate:#66757E;
+  --rule:#C3CBCE;
+  --pencil:#2C6E49;
+  --pencil-red:#9E2B1E;
+
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --rail:132px;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:19px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+.band{position:relative;border-top:1px solid var(--rule)}
+.band__inner{max-width:var(--maxw);margin:0 auto;padding:72px 28px 80px;
+  display:grid;grid-template-columns:var(--rail) 1fr;gap:0 40px}
+.ref{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--slate);
+  white-space:nowrap;text-transform:uppercase;position:sticky;top:26px;align-self:start}
+.ref b{display:block;font-family:var(--display);font-weight:800;font-size:34px;
+  letter-spacing:-.01em;color:var(--ink);line-height:1;margin-bottom:8px}
+.ref .tick{color:var(--pencil);font-size:15px;display:inline-block;
+  opacity:0;transform:translateY(4px);transition:opacity .5s ease,transform .5s ease}
+.ref.is-seen .tick{opacity:1;transform:none}
+
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:0}
+h2{font-size:clamp(28px,3.2vw,42px);max-width:19ch}
+h2.wide{max-width:none}
+h3{font-size:20px;letter-spacing:-.01em;line-height:1.2}
+p{margin:0 0 18px}
+.lede{font-size:clamp(19px,1.5vw,22px);max-width:64ch;color:#22323C}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--slate);margin:0 0 20px}
+.note{font-family:var(--mono);font-size:13px;line-height:1.65;color:var(--slate);
+  max-width:none;margin:26px 0 0;border-top:1px solid var(--rule);padding-top:16px}
+
+.top{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:40;
+  background:rgba(229,232,233,.94);backdrop-filter:blur(6px)}
+.top__in{max-width:var(--maxw);margin:0 auto;padding:14px 28px;
+  display:flex;align-items:center;gap:26px}
+.brand{font-family:var(--mono);font-weight:400;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;margin-right:auto}
+.top a.nav{font-family:var(--mono);font-size:12.5px;color:var(--slate);text-decoration:none}
+.top a.nav:hover{color:var(--ink)}
+
+.btn{display:inline-block;font-family:var(--display);font-weight:600;font-size:15px;
+  text-decoration:none;padding:13px 22px;border:1px solid var(--ink);border-radius:2px;
+  background:var(--ink);color:var(--paper-2);transition:background .18s,color .18s}
+.btn:hover{background:var(--pencil);border-color:var(--pencil)}
+.btn--ghost{background:transparent;color:var(--ink)}
+.btn--ghost:hover{background:var(--ink);color:var(--paper-2)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
+
+.hero{border-bottom:1px solid var(--rule);padding:60px 0 62px}
+.hero h1{font-size:clamp(34px,4.9vw,60px);max-width:19ch}
+.hero .lede{margin-top:26px}
+.tags{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--slate);
+  text-transform:uppercase;border-top:1px solid var(--rule);margin-top:38px;padding-top:18px}
+
+.ticks{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:18px}
+.ticks li{position:relative;padding-left:32px;max-width:66ch}
+.ticks li::before{content:"✓";position:absolute;left:0;top:1px;
+  font-family:var(--mono);color:var(--pencil);font-size:15px}
+.ticks strong{font-weight:500}
+
+.crosses{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:18px}
+.crosses li{position:relative;padding-left:32px;max-width:66ch}
+.crosses li::before{content:"✕";position:absolute;left:0;top:2px;
+  font-family:var(--mono);color:var(--pencil-red);font-size:14px}
+.crosses strong{font-weight:500}
+
+.blocks{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:2px;margin-top:34px}
+.blocks>div{background:var(--paper);padding:28px 30px}
+.blocks h3{margin-bottom:12px}
+.blocks p{font-size:17.5px;max-width:70ch;margin-bottom:0}
+
+.matrix{width:100%;border-collapse:collapse;margin-top:30px;
+  font-family:var(--mono);font-size:12px;background:var(--paper-2)}
+.matrix th,.matrix td{border:1px solid var(--rule);padding:9px 10px;text-align:left}
+.matrix th{font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+  font-size:10.5px;color:var(--slate)}
+.matrix td.no{color:var(--pencil-red);font-weight:500;white-space:nowrap}
+.matrix td.ok{color:var(--pencil);font-weight:500;white-space:nowrap}
+.scroller{overflow-x:auto}
+
+.steps{counter-reset:s;margin-top:30px;border-top:1px solid var(--rule)}
+.steps>div{display:grid;grid-template-columns:64px 1fr;gap:24px;
+  padding:24px 0;border-bottom:1px solid var(--rule)}
+.steps>div::before{counter-increment:s;content:counter(s,decimal-leading-zero);
+  font-family:var(--display);font-weight:800;font-size:26px;color:var(--pencil)}
+.steps p{margin:8px 0 0;font-size:17.5px;max-width:66ch}
+.verdict{font-family:var(--mono);font-size:12.5px;color:var(--slate);margin-top:12px;line-height:1.7}
+.verdict b{color:var(--pencil);font-weight:500}
+.verdict i{color:var(--pencil-red);font-style:normal;font-weight:500}
+
+.doc{font-family:var(--mono);font-size:13px;list-style:none;margin:28px 0 0;padding:0;
+  border-top:1px solid var(--rule)}
+.doc li{display:flex;gap:18px;padding:13px 0;border-bottom:1px solid var(--rule);max-width:78ch}
+.doc li b{color:var(--slate);font-weight:400;min-width:28px}
+
+.cta{border:2px solid var(--ink);border-radius:2px;background:var(--paper-2);
+  padding:34px;margin-top:32px}
+.cta h3{font-size:clamp(22px,2.4vw,30px);margin-bottom:14px;max-width:26ch}
+
+.foot{border-top:1px solid var(--ink);background:var(--paper-2)}
+.foot__in{max-width:var(--maxw);margin:0 auto;padding:40px 28px;
+  display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end}
+.foot__brand{font-family:var(--display);font-weight:800;font-size:17px;margin-right:auto}
+.foot__brand span{display:block;font-family:var(--mono);font-weight:400;font-size:12px;
+  color:var(--slate);letter-spacing:.06em;margin-top:6px;text-transform:uppercase}
+.foot a{font-family:var(--mono);font-size:12.5px;color:var(--slate);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+
+@media(max-width:860px){
+  .band__inner{grid-template-columns:1fr;gap:0;padding:50px 24px 56px}
+  .ref{position:static;display:flex;align-items:baseline;gap:12px;margin-bottom:22px}
+  .ref b{font-size:22px;margin:0}
+  body{font-size:18px}
+  .top a.nav{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .ref .tick{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <a class="brand" href="/">ISO 27001 · SOC 2 · PCI DSS</a>
+    <a class="nav" href="/">← Back to services</a>
+    <a class="nav" href="https://tally.so/r/J9ZMPd?service=general">Get in touch →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Worked example · one control, end to end</p>
+    <h1>Nobody should have standing access to production. Including you.</h1>
+    <p class="lede">Permanent administrative access is the most common finding in this kind of work, and the first thing an enterprise customer asks about in a security questionnaire. Below: what a working version looks like without slowing your engineers down, how it gets tested, and the five places it tends to break. Free to read, no signup.</p>
+    <p class="tags">ISO/IEC 27001 A.5.15 · A.5.18 · A.8.2 · SOC 2 CC6.1 · CC6.3 · PCI DSS 7 &amp; 8 · NIST 800-53 AC-2 · AC-6</p>
+  </div>
+</section>
+
+<!-- A -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>A</b>Situation <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">Why almost everybody fails this one</h2>
+      <p class="lede" style="margin-top:20px">Standing privilege is not a security failure so much as an operational habit. It gets granted because somebody needed it at 2am, and then nothing happens to take it back.</p>
+      <ul class="crosses">
+        <li><strong>The founders and the first engineers have full rights</strong> because there was nobody else to grant them to. The company has forty people now and the access has never been revisited.</li>
+        <li><strong>Elevated rights were granted "temporarily"</strong> during an incident, a migration or a launch. Temporary has no expiry unless somebody builds one.</li>
+        <li><strong>Production access is how support gets done.</strong> Engineers query the live database to answer customer questions, so removing access would break the support process rather than improve security.</li>
+        <li><strong>Nobody can produce a list of who has admin.</strong> Not because it is secret, but because it lives across a cloud console, an identity provider, a database, a CI system and two SaaS tools that never talk to each other.</li>
+        <li><strong>Shared credentials in a password manager.</strong> The account is administrative, several people know it, and the logs show only that "admin" did something.</li>
+      </ul>
+      <p class="note">The support case is the one worth being honest about. Telling an engineer they can no longer read production data does not work unless something replaces it. A control that removes capability without replacing it gets reversed within a month, and then the exception is worse than before.</p>
+    </div>
+  </div>
+</section>
+
+<!-- B -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>B</b>The control <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">What a working version looks like</h2>
+      <p class="lede" style="margin-top:20px">The aim is not to take privilege away. It is to make privilege temporary, requested, logged and reviewed — so that having it is an event rather than a property of a person.</p>
+
+      <div class="blocks">
+        <div>
+          <h3>Separate the identity from the privilege</h3>
+          <p>Day to day accounts hold no administrative rights at all. Elevation happens through a separate role or account that a person assumes when they need it, so ordinary work never runs with privilege attached to it.</p>
+        </div>
+        <div>
+          <h3>Make elevation time bound by default</h3>
+          <p>Access is granted for a window, not indefinitely, and it expires on its own without anybody remembering to remove it. This is the single change that closes most of the findings: expiry does the work that periodic reviews are supposed to do and usually do not.</p>
+        </div>
+        <div>
+          <h3>Require a reason, and put it where it can be read later</h3>
+          <p>Every elevation carries a justification — a ticket, an incident number, a change record. The reason is what turns a log line into evidence, and it is the difference between "somebody had admin on Tuesday" and "this was authorised for this purpose".</p>
+        </div>
+        <div>
+          <h3>Approve out of band for the highest rights</h3>
+          <p>Routine elevation can be self-service with logging. Rights that could destroy data or disable logging need a second person, and that person cannot be the requester. Set the boundary deliberately rather than treating all privilege as one tier.</p>
+        </div>
+        <div>
+          <h3>Replace the support use case, do not just block it</h3>
+          <p>If engineers read production data to answer customer questions, give them a supported path: a read-only view with the sensitive fields masked, or a tool that answers the common questions without direct access. Then the removal holds.</p>
+        </div>
+        <div>
+          <h3>Keep one list, generated rather than maintained</h3>
+          <p>Who holds privileged rights, in which system, granted when and expiring when. Produced from the systems themselves, not typed into a spreadsheet — a maintained list is the first thing an auditor stops trusting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- C -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>C</b>Tiers <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">Not all privilege is the same</h2>
+      <p class="lede" style="margin-top:20px">Treating every elevated right identically is what makes these controls painful. Sorting them into tiers is what makes the control survive contact with an engineering team.</p>
+
+      <div class="scroller">
+        <table class="matrix">
+          <thead>
+            <tr><th>Tier</th><th>Examples</th><th>Standing access</th><th>How it is granted</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Routine elevated</th>
+              <td>Restart a service, read non-sensitive logs, re-run a job</td>
+              <td class="no">No</td>
+              <td>Self-service, time bound, logged with a reason</td>
+            </tr>
+            <tr>
+              <th scope="row">Data access</th>
+              <td>Query production data, export records, read customer content</td>
+              <td class="no">No</td>
+              <td>Approved request, masked where possible, short window</td>
+            </tr>
+            <tr>
+              <th scope="row">Destructive or control-affecting</th>
+              <td>Delete data, change access rights, alter logging or the pipeline</td>
+              <td class="no">No</td>
+              <td>Second-person approval, narrow window, reviewed after use</td>
+            </tr>
+            <tr>
+              <th scope="row">Break glass</th>
+              <td>Full administrative access during a live incident</td>
+              <td class="no">No</td>
+              <td>Defined trigger, alerts on use, reviewed within days</td>
+            </tr>
+            <tr>
+              <th scope="row">Automation</th>
+              <td>Deployment and integration accounts</td>
+              <td class="ok">Yes, scoped</td>
+              <td>Least privilege, credentials rotated, no interactive login</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note">Automation is the only row where standing access is normally acceptable, and it is also the row most often abused: a deployment account with unrestricted rights is standing privilege that any engineer able to edit the pipeline can borrow. Scope it as tightly as a human account, and make sure nobody can log into it directly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- D -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>D</b>The test <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">How it gets tested</h2>
+      <p class="lede" style="margin-top:20px">Four moves. The first one is where most companies come apart, and it happens before anybody looks at the control itself.</p>
+
+      <div class="steps">
+        <div><div>
+          <h3>Produce the population of privileged accounts</h3>
+          <p>Every system in scope, every account with elevated rights, human and non-human, exported from the systems themselves. Non-human accounts are part of the population and are the ones companies forget to include.</p>
+          <p class="verdict"><b>Pass</b> — the list is generated, complete and reconciles across systems. &nbsp; <i>Exception</i> — the list is maintained by hand, or a system in scope cannot produce one.</p>
+        </div></div>
+        <div><div>
+          <h3>Check whether privilege is standing or granted</h3>
+          <p>For each account, does the right exist permanently, or is it assumed for a window? Where standing rights remain, is the reason documented and is the account still needed by somebody still employed?</p>
+          <p class="verdict"><b>Pass</b> — elevation is time bound and expires without intervention. &nbsp; <i>Exception</i> — permanent administrative rights held by individuals, including founders.</p>
+        </div></div>
+        <div><div>
+          <h3>Sample elevations and follow them end to end</h3>
+          <p>Take individual grants from the period and trace each one: who requested it, on what stated basis, who approved it, when it expired, and what was done with it. This is where a control that exists on paper separates from one that operates.</p>
+          <p class="verdict"><b>Pass</b> — each sampled grant has a reason, an approver where required, and an expiry that took effect. &nbsp; <i>Exception</i> — grants with no recorded reason, or that outlived their stated window.</p>
+        </div></div>
+        <div><div>
+          <h3>Test the joiners, movers and leavers path</h3>
+          <p>Leavers from the period checked against every privileged system, not only the identity provider. Movers matter as much: people who changed role and accumulated the rights of both.</p>
+          <p class="verdict"><b>Pass</b> — privileged rights removed promptly and provably on departure or change of role. &nbsp; <i>Exception</i> — a leaver retaining access in any system in scope.</p>
+        </div></div>
+      </div>
+
+      <p class="note">A leaver with live privileged access is the finding least likely to be argued down. It is binary, it is easy to evidence, and it is the one an enterprise customer will ask about directly rather than through the auditor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- E -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>E</b>Evidence <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">What makes evidence hold up</h2>
+      <p class="lede" style="margin-top:20px">Evidence gathered in good faith is often accurate and still unusable. Four questions decide whether it stands.</p>
+      <ul class="doc">
+        <li><b>01</b><span><strong>Timestamped.</strong> Capture date and time in UTC, with the on-screen clock in the image where possible.</span></li>
+        <li><b>02</b><span><strong>Source-attributable.</strong> Which system, which account, which export or query produced it.</span></li>
+        <li><b>03</b><span><strong>Complete for the period.</strong> A snapshot of who has admin today says nothing about who had it in March.</span></li>
+        <li><b>04</b><span><strong>Unaltered.</strong> Raw export retained, any redaction noted, every item referenced to the step it supports.</span></li>
+      </ul>
+      <p class="note">Privileged access is harder to evidence than most controls because the population lives in five places and the history is easy to lose. Log retention is worth checking early: if your elevation records only go back thirty days, a twelve month audit period cannot be evidenced at all, and that is a problem no amount of remediation fixes retrospectively.</p>
+    </div>
+  </div>
+</section>
+
+<!-- F -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>F</b>Breaks <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">Where it usually goes wrong</h2>
+      <ul class="crosses">
+        <li><strong>The founder exception.</strong> Everybody else moved to time bound elevation and one or two people kept permanent rights because it was easier. Auditors look for exactly this.</li>
+        <li><strong>Elevation with no reason recorded.</strong> The mechanism works, the logs exist, and every entry says only that access was granted. Without a justification the log proves activity, not authorisation.</li>
+        <li><strong>A deployment account nobody scoped.</strong> Standing rights, broad permissions, credentials reachable by several engineers, and no interactive login controls.</li>
+        <li><strong>Break glass used and never reviewed.</strong> Invoked during three incidents last year with no record of what was done under it and no review afterwards.</li>
+        <li><strong>Leavers still present in a secondary system.</strong> Offboarding covers the identity provider; the database, the monitoring tool and the cloud console keep their own local accounts.</li>
+      </ul>
+      <p class="note">Three of these five are configuration and process changes that can be made in days. The founder exception is the one that needs a decision rather than a setting, and it is usually the person commissioning the work who has to make it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- G -->
+<section class="band">
+  <div class="band__inner">
+    <div class="ref"><b>G</b>Next step <span class="tick">✓</span></div>
+    <div>
+      <h2 class="wide">One control. A certification is around a hundred.</h2>
+      <p class="lede" style="margin-top:20px">The depth above is the depth a whole programme gets. On a turnkey engagement I design the controls around how your company already works, put them in place, gather the evidence, and handle the auditor.</p>
+      <div class="cta">
+        <h3>Making controls work, then certifying them</h3>
+        <p>Tell me the situation in a couple of lines: the environment, the deadline, and who is asking for the certificate. Thirty minutes, no charge. If it is not something I should be doing, I will say so.</p>
+        <div class="btns">
+          <a class="btn" href="https://tally.so/r/J9ZMPd?service=turnkey">Talk about your certification →</a>
+          <a class="btn btn--ghost" href="/segregation-of-duties/">Read the other worked example →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div class="foot__brand">Making controls work<span>Privileged access · worked example</span></div>
+    <a href="/">Services</a>
+    <a href="/segregation-of-duties/">Segregation of duties</a>
+    <a href="https://tally.so/r/J9ZMPd?service=general">Get in touch</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var refs=document.querySelectorAll('.ref');
+  if(!('IntersectionObserver' in window)){
+    refs.forEach(function(r){r.classList.add('is-seen')});return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('is-seen');io.unobserve(e.target)}
+    });
+  },{rootMargin:'0px 0px -20% 0px'});
+  refs.forEach(function(r){io.observe(r)});
+})();
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{&quot;token&quot;: &quot;4c80b6d945b04f21bc9874e86b1cb3dd&quot;}"></script>
+
+</body>
+</html>
