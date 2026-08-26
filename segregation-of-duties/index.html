@@ -179,7 +179,7 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="wrap">
     <p class="eyebrow">Worked example · one control, end to end</p>
     <h1>A developer must not be able to ship their own change</h1>
-    <p class="lede">This is the control every ISO 27001 and SOC 2 audit tests, and the one that most often fails in a team that ships quickly. Below: what a working version looks like in a real pipeline, what your auditor will do to it, and the five places it usually breaks. Free to read, no signup.</p>
+    <p class="lede">Tested in every ISO 27001 and SOC 2 audit, and a common failure in teams that ship quickly. Below: what a working version looks like in a real pipeline, how it gets tested, and the five places it tends to break. Free to read, no signup.</p>
     <p class="tags">ISO/IEC 27001 A.5.3 · A.8.31 · NIST 800-53 AC-5 · SOC 2 CC8.1 · AWS / Azure / GCP</p>
   </div>
 </section>
@@ -196,9 +196,9 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
         <li><strong>Pull requests are reviewed, in the culture but not in the config.</strong> The team genuinely reviews everything. The platform would still let an admin merge unreviewed at 2am, and that is what gets tested.</li>
         <li><strong>The deploy runs as a service account with more rights than any human,</strong> and whoever can edit the workflow file can borrow them.</li>
         <li><strong>There is an emergency path</strong> that was invented once during an incident and never written down or reviewed since.</li>
-        <li><strong>A consultant wrote a change management policy</strong> describing a process that does not resemble how anything actually ships.</li>
+        <li><strong>A consultant wrote a change management policy</strong> describing a process that does not resemble how anything ships.</li>
       </ul>
-      <p class="note">The last one is the most expensive. A policy that describes a process nobody follows is worse than no policy: the auditor now has a documented standard to test you against, and you fail against your own words.</p>
+      <p class="note">The last one is the most expensive. A policy describing a process nobody follows gives the auditor a documented standard to test against, so the exception is raised against your own wording.</p>
     </div>
   </div>
 </section>
@@ -208,8 +208,8 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="band__inner">
     <div class="ref"><b>B</b>The control <span class="tick">✓</span></div>
     <div>
-      <h2>What a version that actually works looks like</h2>
-      <p class="lede" style="margin-top:20px">The separation has to live in platform configuration, not in a document. If the only thing stopping a self-release is that people are decent about it, the control does not exist.</p>
+      <h2>What a working version looks like</h2>
+      <p class="lede" style="margin-top:20px">The separation has to live in platform configuration rather than in a document. If the only thing preventing a self-release is that nobody would do it, there is nothing for an auditor to test.</p>
 
       <div class="blocks">
         <div>
@@ -246,8 +246,8 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="band__inner">
     <div class="ref"><b>C</b>Conflicts <span class="tick">✓</span></div>
     <div>
-      <h2>The grid your auditor works from</h2>
-      <p class="lede" style="margin-top:20px">Any single person holding two capabilities marked as a conflict breaches segregation of duties. This is the table the test is run against, so it is worth checking your own access against it before anybody else does.</p>
+      <h2>The conflict grid</h2>
+      <p class="lede" style="margin-top:20px">Any single person holding two capabilities marked as a conflict breaches segregation of duties. This is the table the test is run against, so it is worth checking your own access before anybody else does.</p>
 
       <div class="scroller">
         <table class="matrix">
@@ -279,8 +279,8 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="band__inner">
     <div class="ref"><b>D</b>The test <span class="tick">✓</span></div>
     <div>
-      <h2>What your auditor will actually do</h2>
-      <p class="lede" style="margin-top:20px">Three moves. None of them involve reading your policy, which is why a policy on its own does not get you through.</p>
+      <h2>How it gets tested</h2>
+      <p class="lede" style="margin-top:20px">Three moves, none of which involve reading your policy. That is why documentation on its own does not carry an audit.</p>
 
       <div class="steps">
         <div><div>
@@ -310,15 +310,15 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="band__inner">
     <div class="ref"><b>E</b>Evidence <span class="tick">✓</span></div>
     <div>
-      <h2>Why good screenshots still get rejected</h2>
-      <p class="lede" style="margin-top:20px">Most of the evidence a company gathers on its own is technically true and still unusable. Four tests decide it.</p>
+      <h2>What makes evidence hold up</h2>
+      <p class="lede" style="margin-top:20px">Evidence gathered in good faith is often accurate and still unusable. Four questions decide whether it stands.</p>
       <ul class="doc">
         <li><b>01</b><span><strong>Timestamped.</strong> Capture date and time in UTC, with the on-screen clock in the image where possible.</span></li>
         <li><b>02</b><span><strong>Source-attributable.</strong> Which system, which account, which export or query produced it.</span></li>
         <li><b>03</b><span><strong>Complete for the period.</strong> A single point-in-time snapshot will not survive a review covering twelve months.</span></li>
         <li><b>04</b><span><strong>Unaltered.</strong> Raw export retained, any redaction noted, every item referenced to the step it supports.</span></li>
       </ul>
-      <p class="note">This is the part that quietly consumes your engineers. Chasing exports out of four systems, re-taking screenshots that failed one of the four tests, and answering the follow-up questions — on a turnkey programme that work is mine, not theirs.</p>
+      <p class="note">This is the part that quietly consumes engineering time: pulling exports out of four systems, re-taking captures that failed one of the four questions, and answering the follow-ups. On a turnkey programme that work sits with me.</p>
     </div>
   </div>
 </section>
@@ -346,10 +346,10 @@ a:focus-visible{outline:2px solid var(--pencil-red);outline-offset:3px}
   <div class="band__inner">
     <div class="ref"><b>G</b>Next step <span class="tick">✓</span></div>
     <div>
-      <h2>This is one control. A certification is roughly a hundred of them.</h2>
-      <p class="lede" style="margin-top:20px">The depth above is the depth the whole programme gets. On a turnkey engagement I design the controls to fit how your company actually works, put them in place, gather the evidence, and deal with the auditor myself.</p>
+      <h2>One control. A certification is around a hundred.</h2>
+      <p class="lede" style="margin-top:20px">The depth above is the depth a whole programme gets. On a turnkey engagement I design the controls around how your company already works, put them in place, gather the evidence, and handle the auditor.</p>
       <div class="cta">
-        <h3>Making controls work, then getting them certified</h3>
+        <h3>Making controls work, then certifying them</h3>
         <p>Tell me the situation in a couple of lines: the environment, the deadline, and who is asking for the certificate. Thirty minutes, no charge. If it is not something I should be doing, I will say so.</p>
         <div class="btns">
           <a class="btn" href="https://tally.so/r/J9ZMPd?service=turnkey">Talk about your certification →</a>
